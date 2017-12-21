@@ -5,10 +5,12 @@ class JobsController < ApplicationController
   before_action :set_job, only: [:show]
 
   def index
-    @jobs = @jenkins.list_jobs
+    @jobs = @jenkins.jobs
   end
 
   def show
+    byebug
+    @job
   end
 
   private

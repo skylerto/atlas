@@ -1,0 +1,16 @@
+<div class="page-header">
+  <h1><%= @job.full_display_name %></h1>
+</div>
+
+<%# <dl class="dl-horizontal"> %>
+<%#   <dt>Name:</dt> %>
+<%#   <dd><%= @job.name %1></dd> %>
+<%# </dl> %>
+
+<%# <%= @job.current_build.inspect %1> %>
+
+<div class="code_container">
+  <pre>
+    <%= @job.console_output %>
+  </pre>
+</div>

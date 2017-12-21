@@ -1,0 +1,80 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+$primary-color: #5A82BE;
+$primary-text-color: white;
+
+$danger-color: #bd2c00;
+$success-color: #6cc644;
+
+.navbar {
+  background-color: $primary-color;
+  .navbar-brand {
+    color: $primary-text-color;
+  }
+  li {
+    &.active {
+      background-color: lighten( $primary-color, 10% );
+    }
+    a {
+      color: $primary-text-color;
+      &:hover {
+        background-color: lighten( $primary-color, 10% );
+      }
+    }
+  }
+}
+
+.job {
+  border-bottom: 1px solid #eeeeee;
+  padding: 2em;
+}
+
+.text-success {
+  color: $success-color;
+}
+
+.text-failure {
+  color: $danger-color;
+}
+
+.fill-success {
+  fill: $success-color;
+}
+
+.fill-failure {
+  fill: $danger-color;
+}
+
+.success {
+  background-color: $success-color;
+}
+
+.failure {
+  background-color: $danger-color;
+}
+
+.code_container {
+  pre {
+    color: #f1f1f1;
+    background-color: #222;
+    overflow:hidden;
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  }
+}

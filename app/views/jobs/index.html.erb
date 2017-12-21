@@ -1,13 +1,21 @@
 <div class="page-header">
   <h1>Jobs</h1>
-  <div class="container">
-    <div class="row">
-      <% @jobs.each do |job| %>
-        <div class="col-md-12">
-          <%= link_to job, "/jobs/#{job}" %>
-        </div>
-      <% end %>
-    </div>
-  </div>
 </div>
-<p>Find me in app/views/jobs/index.html.erb</p>
+
+<div class="container">
+  <% @jobs.each do |job| %>
+    <div class="job row">
+      <div class="col-md-1 fill-<%= job.status.downcase %>">
+        <%= raw job.icon %>
+      </div>
+      <div class="col-md-11">
+        <div class="name">
+          <%= link_to job.name, "/jobs/#{job.name}" %>
+        </div>
+        <div class="current_version">
+          Current Version: <%= job.current_version %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

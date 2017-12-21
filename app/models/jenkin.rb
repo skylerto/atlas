@@ -1,13 +1,16 @@
 class Jenkin < ApplicationRecord
-  def list_jobs
-    client.job.list_all
+  def jobs
+    jobs = []
+    names = client.job.list_all
+    names.each do |name|
+      jobs << self.job(name)
+    end
+    jobs
   end
 
   def job(name)
-    client.job.list(name)
+    Job.new name: name, job: client.job
   end
-
-  private
 
   def client
     @client = @client || JenkinsApi::Client.new(
