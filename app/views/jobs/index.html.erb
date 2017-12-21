@@ -1,0 +1,13 @@
+<div class="page-header">
+  <h1>Jobs</h1>
+  <div class="container">
+    <div class="row">
+      <% @jobs.each do |job| %>
+        <div class="col-md-12">
+          <%= link_to job, "/jobs/#{job}" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<p>Find me in app/views/jobs/index.html.erb</p>

@@ -1,0 +1,32 @@
+<%= form_with(model: jenkin, local: true) do |form| %>
+  <% if jenkin.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(jenkin.errors.count, "error") %> prohibited this jenkin from being saved:</h2>
+
+      <ul>
+      <% jenkin.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :server_ip %>
+    <%= form.text_field :server_ip, id: :jenkin_server_ip %>
+  </div>
+
+  <div class="field">
+    <%= form.label :username %>
+    <%= form.text_field :username, id: :jenkin_username %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.text_field :password, id: :jenkin_password %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

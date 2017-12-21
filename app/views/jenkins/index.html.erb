@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Jenkins</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Server ip</th>
+      <th>Username</th>
+      <th>Password</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @jenkins.each do |jenkin| %>
+      <tr>
+        <td><%= jenkin.server_ip %></td>
+        <td><%= jenkin.username %></td>
+        <td><%= jenkin.password %></td>
+        <td><%= link_to 'Show', jenkin %></td>
+        <td><%= link_to 'Edit', edit_jenkin_path(jenkin) %></td>
+        <td><%= link_to 'Destroy', jenkin, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Jenkin', new_jenkin_path %>
