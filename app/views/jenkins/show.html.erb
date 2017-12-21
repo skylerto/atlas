@@ -1,13 +1,23 @@
 <div class="page-header">
-  <h1>Jobs</h1>
-  <div class="container">
-    <div class="row">
-      <% @jobs.each do |job| %>
-        <div class="col-md-12">
-          <%= link_to job, "/jobs/#{job}" %>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <%= link_to jobs_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_job_path(@job), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show job</h1>
 </div>
-<p>Find me in app/views/jobs/index.html.erb</p>
+
+<dl class="dl-horizontal">
+  <dt>Server ip:</dt>
+  <dd><%= @job.server_ip %></dd>
+
+  <dt>Username:</dt>
+  <dd><%= @job.username %></dd>
+
+  <dt>Password:</dt>
+  <dd><%= @job.password %></dd>
+
+</dl>
