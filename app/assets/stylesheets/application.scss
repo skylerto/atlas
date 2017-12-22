@@ -13,6 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap";
 $primary-color: #5A82BE;
 $primary-text-color: white;
 
@@ -76,5 +78,11 @@ $success-color: #6cc644;
     white-space: -pre-wrap;      /* Opera 4-6 */
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  }
+}
+
+.build_history {
+  .display_name {
+    font-size: 2em;
   }
 }

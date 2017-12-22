@@ -5,7 +5,7 @@
 <div class="container">
   <% @jobs.each do |job| %>
     <div class="job row">
-      <div class="col-md-1 fill-<%= job.status.downcase %>">
+      <div class="col-md-1 fill-<%= job.current_build.status.downcase %>">
         <%= raw job.icon %>
       </div>
       <div class="col-md-11">
@@ -13,7 +13,7 @@
           <%= link_to job.name, "/jobs/#{job.name}" %>
         </div>
         <div class="current_version">
-          Current Version: <%= job.current_version %>
+          Current Version: <%= job.current_build.display_name %>
         </div>
       </div>
     </div>

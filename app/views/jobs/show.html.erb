@@ -1,16 +1,35 @@
-<div class="page-header">
-  <h1><%= @job.full_display_name %></h1>
-</div>
+<div class="container build_history">
+  <%# Build History %>
+  <% @job.builds.each do |build| %>
+    <div class="job row">
+      <div class="col-md-2">
+        <%= build.author_full_name %>
+      </div>
+      <div class="col-md-10">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-1 fill-<%= build.status.downcase %>">
+              <%= raw build.icon %>
+            </div>
+            <div class="col-md-11 display_name">
+                <%= build.display_name %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
-<%# <dl class="dl-horizontal"> %>
-<%#   <dt>Name:</dt> %>
-<%#   <dd><%= @job.name %1></dd> %>
-<%# </dl> %>
 
-<%# <%= @job.current_build.inspect %1> %>
 
-<div class="code_container">
-  <pre>
-    <%= @job.console_output %>
-  </pre>
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1><%= @job.current_build.full_display_name %></h1>
+    </div>
+    <div class="code_container">
+      <pre>
+        <%= @job.current_build.console_output %>
+      </pre>
+    </div>
+  </div>
 </div>
