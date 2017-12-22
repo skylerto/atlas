@@ -7,7 +7,7 @@
 <%# Build Details %>
 <% if change_set? %>
   <div class="build_details">
-    <%= change_set %>
+    <%# <%= change_set %1> %>
     <div class="author">
       <div class="container">
         <div class="row">
@@ -21,22 +21,40 @@
       </div>
     </div>
     <div class="date">
-      <dl class="dl-horizontal">
-        <dt>Date:</dt>
-        <dd><%= date %></dd>
-      </dl>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            Date:
+          </div>
+          <div class="col-md-11">
+            <%= time_ago_in_words date %> ago at
+          </div>
+        </div>
+      </div>
     </div>
     <div class="comment">
-      <dl class="dl-horizontal">
-        <dt>Comment:</dt>
-        <dd><%= comment %></dd>
-      </dl>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            Comment:
+          </div>
+          <div class="col-md-11">
+            <%= comment %>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="commit_id">
-      <dl class="dl-horizontal">
-        <dt>Commit: </dt>
-        <dd><%= commit %></dd>
-      </dl>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            Commit:
+          </div>
+          <div class="col-md-11">
+            <%= commit %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>

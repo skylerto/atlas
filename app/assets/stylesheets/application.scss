@@ -83,6 +83,16 @@ $success-color: #6cc644;
 
 .build_history {
   .display_name {
-    font-size: 2em;
+    // font-size: 2em;
+    // color: #747382;
+    font-weight: 400;
   }
+  .time {
+    color: #747382;
+    // font-weight: 400;
+  }
+}
+
+.build_details {
+  padding: 2em;
 }

@@ -60,7 +60,7 @@ class Build
   def date
     date = @change_set.find_change_set_item(:date)
     return 'Date not available' if date.nil?
-    date.value
+    Time.parse date.value
   end
 
   def comment

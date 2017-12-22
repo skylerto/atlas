@@ -2,17 +2,26 @@
   <%# Build History %>
   <% @job.builds.each do |build| %>
     <div class="job row">
-      <div class="col-md-2">
-        <%= build.author_full_name %>
-      </div>
-      <div class="col-md-10">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-1 fill-<%= build.status.downcase %>">
-              <%= raw build.icon %>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1 fill-<%= build.status.downcase %>">
+            <%= raw build.icon %>
+          </div>
+          <div class="col-md-11">
+            <div class="display_name">
+              <%= build.comment %>
             </div>
-            <div class="col-md-11 display_name">
-              <%= link_to build.display_name, build_link(build) %>
+            <div class="metadata">
+              <span class="version">
+                <%= link_to build.display_name, build_link(build) %>
+              </span>
+              <span class="time">
+                <%= time_ago_in_words build.date %>
+              </span>
+              ago by
+              <span class="author">
+                <%= build.author_full_name %>
+              </span>
             </div>
           </div>
         </div>
