@@ -1,0 +1,49 @@
+<div class="page-header">
+  <h1 class="text-<%= @build.status.downcase %>"><%= @build.full_display_name %></h1>
+</div>
+
+<%# <% byebug %1> %>
+
+<%# Build Details %>
+<% if change_set? %>
+  <div class="build_details">
+    <%= change_set %>
+    <div class="author">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            Author:
+          </div>
+          <div class="col-md-11">
+            <%= author %> <%= "<#{author_email}>" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="date">
+      <dl class="dl-horizontal">
+        <dt>Date:</dt>
+        <dd><%= date %></dd>
+      </dl>
+    </div>
+    <div class="comment">
+      <dl class="dl-horizontal">
+        <dt>Comment:</dt>
+        <dd><%= comment %></dd>
+      </dl>
+    </div>
+    <div class="commit_id">
+      <dl class="dl-horizontal">
+        <dt>Commit: </dt>
+        <dd><%= commit %></dd>
+      </dl>
+    </div>
+  </div>
+<% end %>
+
+<%# Build Output %>
+<div class="code_container">
+  <pre>
+    <%= @build.console_output %>
+  </pre>
+</div>

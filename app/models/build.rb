@@ -51,6 +51,30 @@ class Build
     author.full_name
   end
 
+  def author_email
+    author = @change_set.find_change_set_item(:author_email)
+    return 'Anonymous' if author.nil?
+    author.email
+  end
+
+  def date
+    date = @change_set.find_change_set_item(:date)
+    return 'Date not available' if date.nil?
+    date.value
+  end
+
+  def comment
+    comment = @change_set.find_change_set_item(:comment)
+    return 'Comment not available' if comment.nil?
+    comment.value
+  end
+
+  def commit_id
+    commit = @change_set.find_change_set_item(:commit_id)
+    return 'Commit ID not available' if commit.nil?
+    commit.id
+  end
+
   def icon(width: ICON_WIDTH, height: ICON_HEIGHT)
     if @status.upcase.eql? ('SUCCESS')
       Octicons::Octicon.new('check', width: width, height: height).to_svg

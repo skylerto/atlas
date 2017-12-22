@@ -16,7 +16,7 @@ class ChangeSet
   end
 
   def find_change_set_item(name)
-    change = @items.select { |c| c.name.eql?(name.to_s) }
+    change = @items.select { |c| c.name.eql?(name.to_s.camelize(:lower)) }
     return change.first unless change.nil?
   end
 

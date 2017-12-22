@@ -1,7 +1,7 @@
-require 'jenkins_api_client'
-
 class JobsController < ApplicationController
-  before_action :set_jenkins
+  include JenkinsControllerConcern
+
+  before_action :load_jenkins
   before_action :set_job, only: [:show]
 
   def index
@@ -9,17 +9,11 @@ class JobsController < ApplicationController
   end
 
   def show
-    byebug
-    @job
   end
 
   private
 
   def set_job
     @job = @jenkins.job(params[:id])
-  end
-
-  def set_jenkins
-    @jenkins = Jenkin.first
   end
 end
