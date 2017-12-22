@@ -6,9 +6,6 @@ class Job
 
   attr_accessor :name
   attr_accessor :status
-  attr_accessor :current_build_number
-  attr_accessor :current_build
-  attr_accessor :current_version
 
   def initialize(
     job:,
@@ -16,26 +13,29 @@ class Job
   )
     @name = name
     @job = job
-    begin
-      threads = []
-      threads << Thread.new do
-        @status = job.get_current_build_status name
-      end
+  end
 
-      threads << Thread.new do
-        @current_build_number = job.get_current_build_number name
-        @current_build = job.get_build_details(name, @current_build_number)
-        @current_version = @current_build['displayName']
-      end
+  def status
+    @status ||= @job.get_current_build_status name
+  end
 
-      threads.each(&:join)
-    rescue JenkinsApi::Exceptions::NotFound => e
-      puts e
-    end
+  def current_build_number
+    @current_build_number ||= @job.get_current_build_number name
+  end
+
+  def current_build
+    @current_build ||= @job.get_build_details(name, current_build_number)
+  rescue JenkinsApi::Exceptions::NotFound => e
+    Rails.logger.error e
+    @current_build = {}
+  end
+
+  def current_version
+    @current_version = self.current_build['displayName'] || 0
   end
 
   def full_display_name
-    @current_build['fullDisplayName']
+    @full_display_name ||= self.current_build['fullDisplayName']
   end
 
   def icon
