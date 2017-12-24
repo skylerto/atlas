@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1 class="text-<%= @build.status.downcase %>"><%= @build.full_display_name %></h1>
+  <h1 class=""><%= @build.full_display_name %></h1>
 </div>
 <%= link_to 'Back to builds', :back %>
 
@@ -7,8 +7,20 @@
 
 <%# Build Details %>
 <% if change_set? %>
-  <div class="build_details">
+  <div class="build_details <%= @build.status.downcase %>">
     <%# <%= change_set %1> %>
+    <div class="status">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            Status:
+          </div>
+          <div class="col-md-11">
+            <%= @build.status.downcase %>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="author">
       <div class="container">
         <div class="row">
