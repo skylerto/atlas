@@ -1,16 +1,44 @@
-<div class="page-header">
-  <h1><%= @job.full_display_name %></h1>
-</div>
+<div class="container build_history">
+  <%# Build History %>
+  <% @job.builds.each do |build| %>
+    <div class="job row">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1 fill-<%= build.status.downcase %>">
+            <%= raw build.icon %>
+          </div>
+          <div class="col-md-11">
+            <div class="display_name">
+              <%= build.comment %>
+            </div>
+            <div class="metadata">
+              <span class="version">
+                <%= link_to build.display_name, build_link(build) %>
+              </span>
+              <span class="time">
+                <%= time_ago_in_words build.date %>
+              </span>
+              ago by
+              <span class="author">
+                <%= build.author_full_name %>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
-<%# <dl class="dl-horizontal"> %>
-<%#   <dt>Name:</dt> %>
-<%#   <dd><%= @job.name %1></dd> %>
-<%# </dl> %>
 
-<%# <%= @job.current_build.inspect %1> %>
 
-<div class="code_container">
-  <pre>
-    <%= @job.console_output %>
-  </pre>
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1><%= @job.current_build.full_display_name %></h1>
+    </div>
+    <div class="code_container">
+      <pre>
+        <%= @job.current_build.console_output %>
+      </pre>
+    </div>
+  </div>
 </div>

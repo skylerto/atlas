@@ -3,9 +3,11 @@ require 'octicons'
 class Job
   ICON_WIDTH = 32
   ICON_HEIGHT = 32
+  BUILD_COUNT = 10
 
   attr_accessor :name
   attr_accessor :status
+  attr_accessor :current_build
 
   def initialize(
     job:,
@@ -13,29 +15,21 @@ class Job
   )
     @name = name
     @job = job
-  end
-
-  def status
     @status ||= @job.get_current_build_status name
+    begin
+      @current_build = Build.new(
+        name: name,
+        job: job,
+        details: @job.get_build_details(name, current_build_number)
+      )
+    rescue JenkinsApi::Exceptions::NotFound => e
+      Rails.logger.error e
+      @current_build = Build.new(name: name, job: job, details: {})
+    end
   end
 
   def current_build_number
     @current_build_number ||= @job.get_current_build_number name
-  end
-
-  def current_build
-    @current_build ||= @job.get_build_details(name, current_build_number)
-  rescue JenkinsApi::Exceptions::NotFound => e
-    Rails.logger.error e
-    @current_build = {}
-  end
-
-  def current_version
-    @current_version = self.current_build['displayName'] || 0
-  end
-
-  def full_display_name
-    @full_display_name ||= self.current_build['fullDisplayName']
   end
 
   def icon
@@ -49,5 +43,31 @@ class Job
   def console_output
     out = @job.get_console_output @name, @current_build_number
     out['output'] if out.respond_to?(:[])
+  end
+
+  def builds
+    count = 0
+    builds = []
+    threads = []
+
+    bs = @job.get_builds(name) || []
+    bs.each do |build|
+      count += 1
+      if count <= BUILD_COUNT
+        threads << Thread.new do
+          begin
+            builds << Build.new(
+              name: @name,
+              job: @job,
+              details: @job.get_build_details(@name, build['number'].to_s)
+            )
+          rescue JenkinsApi::Exceptions::NotFound => e
+            Rails.logger.error e
+          end
+        end
+      end
+    end
+    threads.each(&:join)
+    builds.sort { |f, s| s.display_name <=> f.display_name }
   end
 end

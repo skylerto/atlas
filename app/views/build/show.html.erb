@@ -1,0 +1,80 @@
+<div class="page-header">
+  <h1 class=""><%= @build.full_display_name %></h1>
+</div>
+<%= link_to 'Back to builds', :back %>
+
+<%# <% byebug %1> %>
+
+<%# Build Details %>
+<% if change_set? %>
+  <div class="build_details <%= @build.status.downcase %>">
+    <%# <%= change_set %1> %>
+    <div class="status">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            Status:
+          </div>
+          <div class="col-md-11">
+            <%= @build.status.downcase %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="author">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            Author:
+          </div>
+          <div class="col-md-11">
+            <%= author %> <%= "<#{author_email}>" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="date">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            Date:
+          </div>
+          <div class="col-md-11">
+            <%= time_ago_in_words date %> ago at
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="comment">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            Comment:
+          </div>
+          <div class="col-md-11">
+            <%= comment %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="commit_id">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            Commit:
+          </div>
+          <div class="col-md-11">
+            <%= commit %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%# Build Output %>
+<div class="code_container">
+  <pre>
+    <%= @build.console_output %>
+  </pre>
+</div>

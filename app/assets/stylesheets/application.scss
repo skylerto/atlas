@@ -13,6 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap";
 $primary-color: #5A82BE;
 $primary-text-color: white;
 
@@ -58,14 +60,6 @@ $success-color: #6cc644;
   fill: $danger-color;
 }
 
-.success {
-  background-color: $success-color;
-}
-
-.failure {
-  background-color: $danger-color;
-}
-
 .code_container {
   pre {
     color: #f1f1f1;
@@ -76,5 +70,29 @@ $success-color: #6cc644;
     white-space: -pre-wrap;      /* Opera 4-6 */
     white-space: -o-pre-wrap;    /* Opera 7 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  }
+}
+
+.build_history {
+  .display_name {
+    // font-size: 2em;
+    // color: #747382;
+    font-weight: 400;
+  }
+  .time {
+    color: #747382;
+    // font-weight: 400;
+  }
+}
+
+.build_details {
+  // padding: 2em;
+  margin: 2em;
+  &.success {
+    border-left: 5px solid $success-color;
+  }
+
+  &.failure {
+    border-left: 5px solid $danger-color;
   }
 }
