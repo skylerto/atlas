@@ -1,5 +1,7 @@
 class ServicesController < ApplicationController
+  include JenkinsControllerConcern
   before_action :set_service, only: [:show, :edit, :update, :destroy]
+  before_action :load_jobs, only: [:edit, :new]
 
   # GET /services
   # GET /services.json
@@ -62,6 +64,11 @@ class ServicesController < ApplicationController
   end
 
   private
+
+    def load_jobs
+      load_jenkins
+      @jobs = @jenkins.jobs
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_service
       @service = Service.find(params[:id])
