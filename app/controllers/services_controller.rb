@@ -1,5 +1,9 @@
 class ServicesController < ApplicationController
+  include JenkinsControllerConcern
   before_action :set_service, only: [:show, :edit, :update, :destroy]
+  before_action :load_jobs, only: [:edit, :new, :create, :update]
+
+  MAX_BUILDS = 10000
 
   # GET /services
   # GET /services.json
@@ -28,6 +32,7 @@ class ServicesController < ApplicationController
 
     respond_to do |format|
       if @service.save
+        create_versions
         format.html { redirect_to @service, notice: 'Service was successfully created.' }
         format.json { render :show, status: :created, location: @service }
       else
@@ -62,6 +67,22 @@ class ServicesController < ApplicationController
   end
 
   private
+
+    def create_versions
+      job = fetch_job name: @service.name
+      builds = job.builds MAX_BUILDS
+      builds.each do |build|
+        puts build.display_name
+        Version.find_or_initialize_by(name: build.display_name, service_id: @service.id).save
+      end
+    end
+
+    def fetch_job(name:)
+      j = @jobs.select { |j| j.name == name }
+      return nil if j.empty?
+      j.first
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_service
       @service = Service.find(params[:id])

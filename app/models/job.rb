@@ -8,6 +8,7 @@ class Job
   attr_accessor :name
   attr_accessor :status
   attr_accessor :current_build
+  attr_accessor :job
 
   def initialize(
     job:,
@@ -28,6 +29,10 @@ class Job
     end
   end
 
+  def build(params = {})
+    @job.build(@name, params)
+  end
+
   def current_build_number
     @current_build_number ||= @job.get_current_build_number name
   end
@@ -45,7 +50,7 @@ class Job
     out['output'] if out.respond_to?(:[])
   end
 
-  def builds
+  def builds(max = BUILD_COUNT)
     count = 0
     builds = []
     threads = []
@@ -53,7 +58,7 @@ class Job
     bs = @job.get_builds(name) || []
     bs.each do |build|
       count += 1
-      if count <= BUILD_COUNT
+      if count <= max
         threads << Thread.new do
           begin
             builds << Build.new(
