@@ -15,4 +15,23 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require bootstrap-select
 //= require_tree .
+
+$(document).on('ready turbolinks:load', function() {
+  // If turbolinks is actin up, fix here.
+  $('*:not(.bootstrap-select) > .selectpicker').selectpicker('refresh');
+
+  // $('.job_selection').change(function(val) {
+  //   if (val && val.target && val.target.value) {
+  //     var val = val.target.value;
+  //     console.log(val);
+  //     $.ajax({
+  //       url: '/' + ,
+  //       success: function(result){
+  //         $("#div1").html(result);
+  //       }
+  //     });
+  //   }
+  // });
+});

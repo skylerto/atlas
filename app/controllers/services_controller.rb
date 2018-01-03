@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
   include JenkinsControllerConcern
   before_action :set_service, only: [:show, :edit, :update, :destroy]
-  before_action :load_jobs, only: [:edit, :new]
+  before_action :load_jobs, only: [:edit, :new, :version]
 
   # GET /services
   # GET /services.json
@@ -43,6 +43,7 @@ class ServicesController < ApplicationController
   # PATCH/PUT /services/1.json
   def update
     respond_to do |format|
+      byebug
       if @service.update(service_params)
         format.html { redirect_to @service, notice: 'Service was successfully updated.' }
         format.json { render :show, status: :ok, location: @service }
@@ -64,11 +65,6 @@ class ServicesController < ApplicationController
   end
 
   private
-
-    def load_jobs
-      load_jenkins
-      @jobs = @jenkins.jobs
-    end
     # Use callbacks to share common setup or constraints between actions.
     def set_service
       @service = Service.find(params[:id])
@@ -76,6 +72,6 @@ class ServicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def service_params
-      params.require(:service).permit(:name, :version)
+      params.require(:service).permit(:name, :version, :environment_id)
     end
 end

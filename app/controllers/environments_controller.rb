@@ -2,7 +2,7 @@ class EnvironmentsController < ApplicationController
   include JenkinsControllerConcern
 
   before_action :set_environment, only: [:show, :edit, :update, :destroy]
-  before_action :set_jenkins_jobs, only: [:edit, :update]
+  # before_action :set_jenkins_jobs, only: [:edit, :update]
 
   # GET /environments
   # GET /environments.json
@@ -73,18 +73,13 @@ class EnvironmentsController < ApplicationController
       environment_id = params[:id]
       all_jobs = @jenkins.jobs
       services.each do |service|
-        job = all_jobs.select { |j| j.name == service }
-        version = job.first.current_build.display_name unless job.empty?
+        # job = all_jobs.select { |j| j.name == service }
+        # version = job.first.current_build.display_name unless job.empty?
         s = Service.find_or_initialize_by(name: service)
         s.name = service
         s.environment_id = environment_id
         s.version = version
         s.save
-        # begin
-        #   Service.update(name: service, environment_id: environment_id, version: version)
-        # rescue ActiveRecord::RecordNotFound
-        #   Service.new(name: service, environment_id: environment_id, version: version).save!
-        # end
       end
     end
     # Use callbacks to share common setup or constraints between actions.
