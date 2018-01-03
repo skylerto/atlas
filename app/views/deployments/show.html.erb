@@ -18,3 +18,27 @@
   <dd><%= @deployment.name %></dd>
 
 </dl>
+
+<h3>Services</h3>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Version</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @deployment.versions.each do |version| %>
+        <tr>
+          <td><%= version.service.name %></td>
+          <td><%= version.name %></td>
+          <td><%= link_to 'Edit', version.service %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

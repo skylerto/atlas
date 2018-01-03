@@ -1,5 +1,15 @@
 class DeploymentsController < ApplicationController
-  before_action :set_deployment, only: [:show, :edit, :update, :destroy]
+  before_action :set_deployment, only: [:show, :edit, :update, :destroy, :add_service]
+
+  def add_service
+    # byebug
+    service = Service.find(service_params[:id])
+    versions = service.versions.select { |v| v.name == service_params[:version] }
+    version = versions.first unless versions.empty?
+    @deployment.versions << version
+    @deployment.save
+    render :edit
+  end
 
   # GET /deployments
   # GET /deployments.json
@@ -42,6 +52,11 @@ class DeploymentsController < ApplicationController
   def update
     respond_to do |format|
       if @deployment.update(deployment_params)
+        services_params(@deployment).each do |service_name, version_name|
+          version = Version.find_by(name: version_name)
+          @deployment.versions << version if version
+        end
+        @deployment.save
         format.html { redirect_to @deployment, notice: 'Deployment was successfully updated.' }
         format.json { render :show, status: :ok, location: @deployment }
       else
@@ -62,6 +77,10 @@ class DeploymentsController < ApplicationController
   end
 
   private
+
+    def service_params
+      params.require(:service).permit(:version, :id)
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_deployment
       @deployment = Deployment.find(params[:id])
@@ -70,5 +89,9 @@ class DeploymentsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def deployment_params
       params.require(:deployment).permit(:environment_id, :name)
+    end
+
+    def services_params(deployment)
+      params.require(:environment).permit(deployment.environment.versions.map { |v| v.service.name})
     end
 end

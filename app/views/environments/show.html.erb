@@ -28,7 +28,8 @@
         <tr>
           <td><%= version.service.name %></td>
           <td><%= version.name %></td>
-          <td><%= link_to 'Edit', version.service %></td>
+          <td><%= link_to 'Show', version.service %></td>
+          <td><%= link_to 'Remove', { controller: 'environments', action: 'remove_version', version: version.id, id: @environment.id } %></td>
         </tr>
       <% end %>
     </tbody>

@@ -1,5 +1,19 @@
 class EnvironmentsController < ApplicationController
-  before_action :set_environment, only: [:show, :edit, :update, :destroy]
+  before_action :set_environment, only: [:show, :edit, :update, :destroy, :remove_version]
+
+  def remove_version
+    version = Version.find(params[:version])
+
+    respond_to do |format|
+      if @environment.versions.delete version
+        format.html { redirect_to @environment }
+        format.json { render :show, status: :ok, location: @environment }
+      else
+        format.html { render :show }
+        format.json { render json: @environment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   # GET /environments
   # GET /environments.json
