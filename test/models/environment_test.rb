@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class EnvironmentTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'dev environment has versions' do
+    dev = environments(:dev)
+    assert dev.versions
+  end
 end
