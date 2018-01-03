@@ -1,0 +1,36 @@
+<%= form_for(@deployment, html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <% if @deployment.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= pluralize(@deployment.errors.count, "error") %> prohibited this deployment from being saved:</h4>
+
+      <ul>
+      <% @deployment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :environment_id, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.collection_select :environment_id, Environment.all, :id, :name, class: "form-control" %>
+    </div>
+  </div>
+
+  <% @deployment.environment.versions.each do |version| %>
+    <div class="form-group">
+      <%= f.label version.service.name, version.service.name, class: "col-sm-2 control-label" %>
+      <div class="col-sm-10">
+        <input class="form-control" placeholder="Currnet Version: <%= @deployment.environment.version?(version.service).name %>" name="<%= "environment[#{version.service.name}]" %>" id="environment_name" type="text">
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

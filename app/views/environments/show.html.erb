@@ -24,13 +24,13 @@
     </thead>
 
     <tbody>
-      <tr>
-        <% @environment.versions.each do |version| %>
+      <% @environment.versions.each do |version| %>
+        <tr>
           <td><%= version.service.name %></td>
           <td><%= version.name %></td>
           <td><%= link_to 'Edit', version.service %></td>
-        <% end %>
-      </tr>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>

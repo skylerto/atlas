@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :deployments
   resources :versions
   resources :environments
   resources :services
