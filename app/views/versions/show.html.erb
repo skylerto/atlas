@@ -1,0 +1,20 @@
+<div class="page-header">
+  <%= link_to versions_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_version_path(@version), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show version</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Service:</dt>
+  <dd><%= @version.service %></dd>
+
+  <dt>Name:</dt>
+  <dd><%= @version.name %></dd>
+
+</dl>

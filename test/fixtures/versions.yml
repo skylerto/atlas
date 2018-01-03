@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+EmailServiceV1.0.0.0:
+  service: EmailService
+  name: 1.0.0.0
+
+EmailServiceV1.0.0.1:
+  service: EmailService
+  name: 1.0.0.1
+
+APIServiceV1.0.0.0:
+  service: APIService
+  name: 1.0.0.0
+
+APIServiceV1.0.0.1:
+  service: APIService
+  name: 1.0.0.1
