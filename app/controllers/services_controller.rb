@@ -1,7 +1,8 @@
 class ServicesController < ApplicationController
   include JenkinsControllerConcern
-  before_action :set_service, only: [:show, :edit, :update, :destroy, :load_versions, :add_version]
-  before_action :load_jobs, only: [:edit, :new, :create, :update, :load_versions, :show]
+  before_action :set_service, only: [:show, :edit, :update, :destroy, :add_version, :load_versions]
+  # before_action :load_jobs, only: [:edit, :new, :create, :update]
+  before_action :load_job_names, only: [:show, :load_versions]
 
   MAX_BUILDS = 10000
 
@@ -84,15 +85,16 @@ class ServicesController < ApplicationController
       job = fetch_job name: name
       builds = job.builds MAX_BUILDS
       builds.each do |build|
-        puts build.display_name
         Version.find_or_initialize_by(name: build.display_name, service_id: @service.id).save
       end
     end
 
     def fetch_job(name:)
-      j = @jobs.select { |j| j.name == name }
-      return nil if j.empty?
-      j.first
+      @jenkins ||= load_jenkins
+      @jenkins.job(name)
+      # j = @jobs.select { |j| j.name == name }
+      # return nil if j.empty?
+      # j.first
     end
 
     # Use callbacks to share common setup or constraints between actions.

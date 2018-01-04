@@ -8,6 +8,11 @@ class Jenkin < ApplicationRecord
     jobs
   end
 
+  def job_names
+    client.job.list_all
+  end
+
+
   def job(name)
     Job.new name: name, job: client.job
   end
