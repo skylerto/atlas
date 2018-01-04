@@ -7,6 +7,7 @@
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
+  <%= link_to 'Load Versions', {controller: 'services', action: 'load_versions'}, class: 'btn btn-primary' %>
   <h1><%= @service.name %></h1>
 </div>
 

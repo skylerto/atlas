@@ -1,9 +1,14 @@
 class ServicesController < ApplicationController
   include JenkinsControllerConcern
-  before_action :set_service, only: [:show, :edit, :update, :destroy]
-  before_action :load_jobs, only: [:edit, :new, :create, :update]
+  before_action :set_service, only: [:show, :edit, :update, :destroy, :load_versions]
+  before_action :load_jobs, only: [:edit, :new, :create, :update, :load_versions]
 
   MAX_BUILDS = 10000
+
+  def load_versions
+    create_versions
+    render :show
+  end
 
   # GET /services
   # GET /services.json

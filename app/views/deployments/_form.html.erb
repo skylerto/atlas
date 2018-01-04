@@ -19,27 +19,6 @@
     </div>
   </div>
 
-  <% if @deployment.environment %>
-    <% @deployment.environment.versions.each do |version| %>
-      <div class="form-group">
-        <%= f.label version.service.name, version.service.name, class: "col-sm-2 control-label" %>
-        <div class="col-sm-10">
-          <input class="form-control" placeholder="Currnet Version: <%= @deployment.environment.version?(version.service).name %>" name="<%= "environment[#{version.service.name}]" %>" id="environment_name" type="text">
-        </div>
-      </div>
-    <% end %>
-  <% else %>
-    <div class="form-group row">
-      <div class="col-md-12">
-        <em>Must attach an environment before a deployment can take place</em>
-      </div>
-    </div>
-  <% end %>
-
-
-
-
-
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <%= f.submit class: "btn btn-primary" %>
@@ -52,29 +31,42 @@
   <%= form_for(version.service, url: { action: 'add_service' }, html: { class: "form-horizontal", role: "form", method: 'post' }) do |s| %>
     <div class="form-group">
       <label for="service" class="col-sm-2 control-label">Service: </label>
-      <div class="col-sm-5">
+      <div class="col-sm-4">
         <%= s.collection_select :id, Service.all, :id, :name, class: 'selectpicker job_selection' %>
       </div>
-      <div class="col-sm-5">
+      <div class="col-sm-4">
         <input class="form-control" value="<%= version.name %>" name="<%= "service[#{version.name}]" %>" id="service_version" type="text">
+      </div>
+      <div class="col-sm-1">
+        <%= link_to 'x', {:controller => 'deployments', :action => 'remove_service', service_id: version.service.id, version_id: version.id }, {:method => :post } %>
       </div>
     </div>
   <% end %>
 <% end %>
 
-<%= form_for(:service, url: { action: 'add_service' }, html: { class: "form-horizontal", role: "form", method: 'post' }) do |s| %>
-  <div class="form-group">
-    <label for="service" class="col-sm-2 control-label">Service: </label>
-    <div class="col-sm-5">
-      <%= s.collection_select :id, Service.all, :id, :name, class: 'selectpicker job_selection' %>
+
+<% if @deployment.id %>
+  <%# Add Service %>
+  <%= form_for(:service, url: { action: 'add_service' }, html: { class: "form-horizontal", role: "form", method: 'post' }) do |s| %>
+    <div class="form-group">
+      <label for="service" class="col-sm-2 control-label">Service: </label>
+      <div class="col-sm-5">
+        <%= s.collection_select :id, Service.all, :id, :name, class: 'selectpicker job_selection' %>
+      </div>
+      <div class="col-sm-5">
+        <%= s.text_field 'version', class: 'selectpicker job_selection' %>
+      </div>
     </div>
-    <div class="col-sm-5">
-      <%= s.text_field 'version', class: 'selectpicker job_selection' %>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <%= s.submit 'Add Service', class: "btn btn-primary" %>
+      </div>
     </div>
-  </div>
+  <% end %>
+<% else %>
   <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <%= s.submit class: "btn btn-primary" %>
+    <div class="col-md-12">
+      <em>Must specify the deployment's environment before attaching services</em>
     </div>
   </div>
 <% end %>

@@ -1,13 +1,29 @@
 class DeploymentsController < ApplicationController
-  before_action :set_deployment, only: [:show, :edit, :update, :destroy, :add_service]
+  before_action :set_deployment, only: [:show, :edit, :update, :destroy, :add_service, :remove_service]
 
+  ##
+  # Action to add a service version from a deployment
+  #
   def add_service
-    # byebug
     service = Service.find(service_params[:id])
     versions = service.versions.select { |v| v.name == service_params[:version] }
-    version = versions.first unless versions.empty?
-    @deployment.versions << version
-    @deployment.save
+    if versions.empty?
+      render :edit, error: "Version #{service_params[:version]} of #{service.name} doesn't exist"
+    else
+      version = versions.first
+      @deployment.versions << version
+      @deployment.save
+      render :edit
+    end
+  end
+
+  ##
+  # Action to remove a service version from a deployment
+  #
+  def remove_service
+    service = Service.find(params[:service_id])
+    version = Version.find(params[:version_id])
+    @deployment.versions.delete(version)
     render :edit
   end
 
