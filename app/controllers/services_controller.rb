@@ -1,9 +1,14 @@
 class ServicesController < ApplicationController
   include JenkinsControllerConcern
-  before_action :set_service, only: [:show, :edit, :update, :destroy]
-  before_action :load_jobs, only: [:edit, :new, :create, :update]
+  before_action :set_service, only: [:show, :edit, :update, :destroy, :load_versions]
+  before_action :load_jobs, only: [:edit, :new, :create, :update, :load_versions]
 
   MAX_BUILDS = 10000
+
+  def load_versions
+    create_versions
+    render :show
+  end
 
   # GET /services
   # GET /services.json
@@ -47,6 +52,7 @@ class ServicesController < ApplicationController
   def update
     respond_to do |format|
       if @service.update(service_params)
+        create_versions
         format.html { redirect_to @service, notice: 'Service was successfully updated.' }
         format.json { render :show, status: :ok, location: @service }
       else

@@ -1,15 +1,23 @@
 <div class="page-header">
-  <%= link_to environments_path, class: 'btn btn-default' do %>
+  <%= link_to deployments_path, class: 'btn btn-default' do %>
     <span class="glyphicon glyphicon-list-alt"></span>
     Back
   <% end %>
-  <%= link_to edit_environment_path(@environment), class: 'btn btn-primary' do %>
+  <%= link_to edit_deployment_path(@deployment), class: 'btn btn-primary' do %>
     <span class="glyphicon glyphicon-pencil"></span>
     Edit
   <% end %>
-  <h1><%= @environment.name %></h1>
+  <h1>Show deployment</h1>
 </div>
 
+<dl class="dl-horizontal">
+  <dt>Environment:</dt>
+  <dd><%= @deployment.environment.name %></dd>
+
+  <dt>Name:</dt>
+  <dd><%= @deployment.name %></dd>
+
+</dl>
 
 <h3>Services</h3>
 
@@ -24,12 +32,11 @@
     </thead>
 
     <tbody>
-      <% @environment.versions.each do |version| %>
+      <% @deployment.versions.each do |version| %>
         <tr>
           <td><%= version.service.name %></td>
           <td><%= version.name %></td>
-          <td><%= link_to 'Show', version.service %></td>
-          <td><%= link_to 'Remove', { controller: 'environments', action: 'remove_version', version: version.id, id: @environment.id } %></td>
+          <td><%= link_to 'Edit', version.service %></td>
         </tr>
       <% end %>
     </tbody>
