@@ -1,5 +1,15 @@
 class DeploymentsController < ApplicationController
-  before_action :set_deployment, only: [:show, :edit, :update, :destroy, :add_service, :remove_service]
+  before_action :set_deployment, only: [:show, :edit, :update, :destroy, :add_service, :remove_service, :update_service]
+
+  def update_service
+    version = Version.find(service_params[:id])
+    service = Service.find_by(name: service_params[:name])
+    versions = @deployment.versions.select { |v| v.service == service }
+    @deployment.versions.delete versions
+    @deployment.versions << version
+    @deployment.save
+    redirect_to edit_deployment_url(@deployment)
+  end
 
   ##
   # Action to add a service version from a deployment
@@ -97,7 +107,7 @@ class DeploymentsController < ApplicationController
   private
 
     def service_params
-      params.require(:service).permit(:version, :id)
+      params.require(:service).permit(:version, :id, :name)
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_deployment

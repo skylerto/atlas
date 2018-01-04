@@ -15,34 +15,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require bootstrap-select
 //= require_tree .
 
-$(document).ready(function() {
-  if ($('.environment_services')) {
-    load_services();
-  }
+$(document).on('ready turbolinks:load', function() {
+  $('.selectpicker').selectpicker();
 });
-
-function load_services() {
-  var services = $('.environment_services').data('services');
-  var data = `<div class="environment_services">
-    <div class="form-group">
-      <label class="col-sm-2 control-label" for="environment_name">Name</label>
-      <div class="col-sm-10">
-        ${option_select(services)}
-      </div>
-    </div>
-  </div>`;
-  console.log(services);
-  $('.environment_services').append(data);
-}
-
-
-function option_select(services) {
-  var select = `<select name="environment[name]" id="environment_name">`;
-  for (var service of services) {
-    select = `${select}<option value="${service.id}">${service.name}</option>`
-  }
-  select = `${select}</select>`;
-  return select;
-}

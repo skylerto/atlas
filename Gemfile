@@ -21,6 +21,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jenkins_api_client'
 gem 'concurrent-ruby'
 gem 'record_tag_helper', '~> 1.0'
+gem 'bootstrap-select-rails'
 
 gem 'octicons_helper'
 gem 'bootstrap-generators', '~> 3.3.4'

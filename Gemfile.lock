@@ -50,6 +50,7 @@ GEM
       sass (>= 3.5.2)
     bootstrap-generators (3.3.4)
       railties (>= 3.1.0)
+    bootstrap-select-rails (1.12.4)
     builder (3.2.3)
     byebug (9.1.0)
     capybara (2.16.1)
@@ -205,6 +206,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap (~> 4.0.0.beta2.1)
   bootstrap-generators (~> 3.3.4)
+  bootstrap-select-rails
   byebug
   capybara (~> 2.13)
   concurrent-ruby

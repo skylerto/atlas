@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :deployments
   post '/deployments/add_service/:id', to: 'deployments#add_service'
+  post '/deployments/update_service/:id', to: 'deployments#update_service'
   post '/deployments/remove_service/:id', to: 'deployments#remove_service'
 
   resources :versions
