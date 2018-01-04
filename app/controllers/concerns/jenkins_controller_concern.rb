@@ -8,9 +8,8 @@ module JenkinsControllerConcern extend ActiveSupport::Concern
     @jenkins ||= Jenkin.first
   end
 
+  # Figure out how to cache this
   def load_jobs
-    @jobs = Rails.cache.fetch('jobs', :expires_in => 1.hour) do
-      load_jenkins.jobs
-    end
+    @jobs = load_jenkins.jobs
   end
 end

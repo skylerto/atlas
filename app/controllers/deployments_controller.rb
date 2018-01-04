@@ -6,14 +6,16 @@ class DeploymentsController < ApplicationController
   #
   def add_service
     service = Service.find(service_params[:id])
-    versions = service.versions.select { |v| v.name == service_params[:version] }
-    if versions.empty?
-      render :edit, error: "Version #{service_params[:version]} of #{service.name} doesn't exist"
+    if service.nil? || service.versions.empty?
+      msg =  "No versions of #{service.name} available"
+      Rails.logger.error msg
+      link = "Please add versions to #{view_context.link_to(service.name, service_path(service))}"
+      redirect_to edit_deployment_url(@deployment), flash: { error: "#{msg}, #{link}" }
     else
-      version = versions.first
+      version = service.versions.first
       @deployment.versions << version
       @deployment.save
-      render :edit
+      redirect_to edit_deployment_url(@deployment)
     end
   end
 

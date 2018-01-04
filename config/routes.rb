@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get '/environments/:id/remove_version/:version', to: 'environments#remove_version'
 
   resources :services
-  get 'services/load_versions/:id', to: 'services#load_versions'
+  post 'services/load_versions/:id', to: 'services#load_versions'
 
   get 'jobs/:name/build/:number', to: 'build#show'
   get 'jobs', to: 'jobs#index'

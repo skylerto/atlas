@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
   include JenkinsControllerConcern
   before_action :set_service, only: [:show, :edit, :update, :destroy, :load_versions, :add_version]
-  before_action :load_jobs, only: [:edit, :new, :create, :update, :load_versions]
+  before_action :load_jobs, only: [:edit, :new, :create, :update, :load_versions, :show]
 
   MAX_BUILDS = 10000
 
@@ -12,8 +12,8 @@ class ServicesController < ApplicationController
   end
 
   def load_versions
-    create_versions
-    render :show
+    create_versions name: job_params[:name]
+    render :show, notice: "Versions loaded from #{job_params[:name]} job"
   end
 
   # GET /services
@@ -80,8 +80,8 @@ class ServicesController < ApplicationController
 
   private
 
-    def create_versions
-      job = fetch_job name: @service.name
+  def create_versions(name: @service.name)
+      job = fetch_job name: name
       builds = job.builds MAX_BUILDS
       builds.each do |build|
         puts build.display_name
@@ -107,5 +107,9 @@ class ServicesController < ApplicationController
 
     def version_params
       params.require(:version).permit(:name)
+    end
+
+    def job_params
+      params.require(:job).permit(:name)
     end
 end

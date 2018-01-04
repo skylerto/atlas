@@ -40,7 +40,10 @@
   <% end %>
 </div>
 
-<%= form_for(:load_versions, url: { controller: 'services', action: 'load_version'}, html: { class: "form-horizontal", role: "form" }) do |f| %>
-  <%= f.collection_select :name, @jobs, :name, :name, class: 'selectpicker' %>
-  <%= f.submit 'Load Versions', class: "btn btn-primary" %>
+<h3>Load Versions from Job</h3>
+
+<%= form_for(:job, url: { controller: 'services', action: 'load_versions' }, html: { class: "form-horizontal", role: "form" }) do |j| %>
+  <%# <%= j.collection_select 'Name', @jobs, :name, :name, class: 'selectpicker' %1> %>
+  <%= j.collection_select :name, @jobs, :name, :name, class: 'selectpicker job_selection' %>
+  <%= j.submit 'Load Versions', class: "btn btn-primary" %>
 <% end %>
