@@ -1,13 +1,19 @@
 class ServicesController < ApplicationController
   include JenkinsControllerConcern
-  before_action :set_service, only: [:show, :edit, :update, :destroy, :load_versions]
-  before_action :load_jobs, only: [:edit, :new, :create, :update, :load_versions]
+  before_action :set_service, only: [:show, :edit, :update, :destroy, :load_versions, :add_version]
+  before_action :load_jobs, only: [:edit, :new, :create, :update, :load_versions, :show]
 
   MAX_BUILDS = 10000
 
-  def load_versions
-    create_versions
+  def add_version
+    version = Version.new(name: version_params[:name], service_id: @service.id)
+    version.save
     render :show
+  end
+
+  def load_versions
+    create_versions name: job_params[:name]
+    render :show, notice: "Versions loaded from #{job_params[:name]} job"
   end
 
   # GET /services
@@ -74,8 +80,8 @@ class ServicesController < ApplicationController
 
   private
 
-    def create_versions
-      job = fetch_job name: @service.name
+  def create_versions(name: @service.name)
+      job = fetch_job name: name
       builds = job.builds MAX_BUILDS
       builds.each do |build|
         puts build.display_name
@@ -97,5 +103,13 @@ class ServicesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def service_params
       params.require(:service).permit(:name)
+    end
+
+    def version_params
+      params.require(:version).permit(:name)
+    end
+
+    def job_params
+      params.require(:job).permit(:name)
     end
 end
