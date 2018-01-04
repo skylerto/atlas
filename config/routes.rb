@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   post '/deployments/remove_service/:id', to: 'deployments#remove_service'
 
   resources :versions
+  post '/services/add_version/:id', to: 'services#add_version'
+
   resources :environments
   get '/environments/:id/remove_version/:version', to: 'environments#remove_version'
 
