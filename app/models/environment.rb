@@ -9,8 +9,7 @@ class Environment < ApplicationRecord
   # @param [Version] version
   def bump_version(service, version)
     current = version? service
-    raise "Service #{service.name} doesn't exist on this Environment #{self.name}" if current.nil?
-    self.versions.delete current
+    self.versions.delete current if current
     self.versions << version
     self.save
   end

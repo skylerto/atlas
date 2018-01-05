@@ -16,7 +16,11 @@
                 <%= link_to build.display_name, build_link(build) %>
               </span>
               <span class="time">
-                <%= time_ago_in_words build.date %>
+                <% if build.date.instance_of? String %>
+                  <%= build.date %>
+                <% else %>
+                  <%= time_ago_in_words build.date %>
+                <% end %>
               </span>
               ago by
               <span class="author">

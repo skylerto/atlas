@@ -1,5 +1,18 @@
 class DeploymentsController < ApplicationController
-  before_action :set_deployment, only: [:show, :edit, :update, :destroy, :add_service, :remove_service, :update_service]
+  include JenkinsControllerConcern
+
+  before_action :set_deployment, only: [:show, :edit, :update, :destroy, :add_service, :remove_service, :update_service, :deploy]
+
+  def deploy
+    env = @deployment.environment
+    @deployment.versions.each do |version|
+      Rails.logger.debug "Bumping version of #{version.service.name} to #{version.name}"
+      version.deploy environment: env, jenkins: load_jenkins
+      env.bump_version version.service, version
+    end
+    @deployment.status = true
+    @deployment.save
+  end
 
   def update_service
     version = Version.find(service_params[:id])

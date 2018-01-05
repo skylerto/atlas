@@ -29,7 +29,19 @@ class Job
     end
   end
 
-  def build(params = {})
+  def build(name:)
+    Build.new(
+      name: @name,
+      job: @job,
+      details: @job.get_build_details(@name, name)
+    )
+  end
+
+  ##
+  # Build a job with parameters
+  #
+  # @params [Hash] parameters to run the job with
+  def run_build(params = {})
     @job.build(@name, params)
   end
 

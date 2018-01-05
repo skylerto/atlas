@@ -26,7 +26,7 @@
         <td class="text-<%= deployment.status ? 'success' : 'failure' %>"><%= deployment.status ? 'Deployed' : 'Pending'%></td>
         <td><%= link_to 'Show', deployment %></td>
         <td><%= deployment.status ? 'Cannot Edit' : link_to('Edit', edit_deployment_path(deployment)) %></td>
-        <td><%= link_to 'Destroy', deployment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= deployment.status ? 'Cannot Destroy' :link_to('Destroy', deployment, method: :delete, data: { confirm: 'Are you sure?' }) %></td>
       <% end %>
     </tbody>
   </table>

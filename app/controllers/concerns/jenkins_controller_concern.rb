@@ -3,7 +3,7 @@ module JenkinsControllerConcern extend ActiveSupport::Concern
     helper_method :load_jenkins
     helper_method :load_jobs
     helper_method :load_job_names
-  end
+  end if self.respond_to? :helper_method
 
   def load_jenkins
     @jenkins ||= Jenkin.first
