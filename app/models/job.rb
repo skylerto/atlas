@@ -4,6 +4,7 @@ class Job
   ICON_WIDTH = 32
   ICON_HEIGHT = 32
   BUILD_COUNT = 10
+  BUILD_START_TIMEOUT = 60.minutes
 
   attr_accessor :name
   attr_accessor :status
@@ -35,6 +36,8 @@ class Job
       job: @job,
       details: @job.get_build_details(@name, name)
     )
+  rescue
+    nil
   end
 
   ##
@@ -42,7 +45,9 @@ class Job
   #
   # @params [Hash] parameters to run the job with
   def run_build(params = {})
-    @job.build(@name, params)
+    @job.build(@name, params, {
+      'build_start_timeout' => BUILD_START_TIMEOUT
+    })
   end
 
   def current_build_number

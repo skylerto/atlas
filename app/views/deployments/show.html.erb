@@ -35,7 +35,7 @@
         <tr>
           <td><%= version.service.name %></td>
           <td><%= version.name %></td>
-          <td><%= version.deployment_status @deployment %></td>
+          <td class="text-<%= version.deployment_status(@deployment) %>"><%= version.deployment_status @deployment %></td>
           <td><%= link_to 'Edit', version.service %></td>
         </tr>
       <% end %>

@@ -92,9 +92,6 @@ class ServicesController < ApplicationController
     def fetch_job(name:)
       @jenkins ||= load_jenkins
       @jenkins.job(name)
-      # j = @jobs.select { |j| j.name == name }
-      # return nil if j.empty?
-      # j.first
     end
 
     # Use callbacks to share common setup or constraints between actions.

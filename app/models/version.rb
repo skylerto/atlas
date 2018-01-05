@@ -9,14 +9,18 @@ class Version < ApplicationRecord
     environment = deployment.environment.name
     version = self.name
     job = load_jenkins.job(self.service.name)
-    job.build(name: "#{environment} - #{version}").status
+    build = job.build(name: self.build_number)
+    return 'failure' if build
+    build.status
   end
 
   def deploy(environment:, jenkins:)
     job = jenkins.job self.service.name
-    job.run_build({
+    build_number = job.run_build({
       SEMVER_NUMBER: self.name,
       ENVIRONMENT: environment.name
     })
+    self.build_number = build_number
+    self.save
   end
 end

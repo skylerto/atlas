@@ -12,6 +12,7 @@ class DeploymentsController < ApplicationController
     end
     @deployment.status = true
     @deployment.save
+    redirect_to deployments_url(@deployment)
   end
 
   def update_service
